@@ -1,0 +1,8 @@
+{
+  "name": "Cœur & Vie - Cardio & Guérison Biblique",
+  "description": "Stimulation cardio, cohérence cardiaque et réconfort face aux maladies, inspiré par la Bible Louis Segond.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
