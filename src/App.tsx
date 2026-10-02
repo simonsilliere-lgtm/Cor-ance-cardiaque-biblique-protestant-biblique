@@ -11,7 +11,6 @@ import { BpmTrackerView } from './components/BpmTrackerView';
 import { IllnessesWorldView } from './components/IllnessesWorldView';
 import { SpiritualIllnessesView } from './components/SpiritualIllnessesView';
 import { BiblicalChatbotView } from './components/BiblicalChatbotView';
-import { BiblicalNotesView } from './components/BiblicalNotesView';
 import { TestimonialsView } from './components/TestimonialsView';
 import { PrayerWallView } from './components/PrayerWallView';
 import { VerseLibraryView } from './components/VerseLibraryView';
@@ -50,10 +49,6 @@ export default function App() {
 
         {activeTab === 'bpm' && (
           <BpmTrackerView soundEnabled={soundEnabled} />
-        )}
-
-        {activeTab === 'notes' && (
-          <BiblicalNotesView />
         )}
 
         {activeTab === 'maladies' && (

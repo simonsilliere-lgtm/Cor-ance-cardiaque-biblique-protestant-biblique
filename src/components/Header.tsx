@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Heart, Wind, Activity, ShieldPlus, Flame, BookOpen, Volume2, VolumeX, Sword, Headphones, Music, Pause, Play, MessageSquareQuote, PenTool } from 'lucide-react';
+import { Heart, Wind, Activity, ShieldPlus, Flame, BookOpen, Volume2, VolumeX, Sword, Headphones, Music, Pause, Play, MessageSquareQuote } from 'lucide-react';
 import { isAmbiencePlaying, startBiblicalAmbience, stopBiblicalAmbience } from '../utils/biblicalAmbience';
 
-export type ActiveTab = 'coherence' | 'cardio' | 'bpm' | 'notes' | 'temoignages' | 'maladies' | 'spirituelles' | 'chatbot' | 'priere' | 'versets';
+export type ActiveTab = 'coherence' | 'cardio' | 'bpm' | 'maladies' | 'spirituelles' | 'chatbot' | 'priere' | 'temoignages' | 'versets';
 
 interface HeaderProps {
   activeTab: ActiveTab;
@@ -53,12 +53,6 @@ export const Header: React.FC<HeaderProps> = ({
       label: 'Mesure Pouls / BPM',
       shortLabel: 'Pouls BPM',
       icon: <Activity className="w-4 h-4" />
-    },
-    {
-      id: 'notes',
-      label: 'Tablettes de Foi (Notes & Micro)',
-      shortLabel: 'Notes & Voix',
-      icon: <PenTool className="w-4 h-4" />
     },
     {
       id: 'temoignages',

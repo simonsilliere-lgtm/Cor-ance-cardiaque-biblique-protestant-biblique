@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { INITIAL_TESTIMONIES, FaithTestimony, BIBLICAL_TRUTH_VERSES } from '../data/testimonialsData';
-import { Sparkles, Heart, Flame, Plus, Volume2, BookOpen, CheckCircle, MessageSquareQuote, Check, X, Send, Scale, ShieldAlert, Trash2, Mic, MicOff } from 'lucide-react';
+import { Sparkles, Heart, Flame, Plus, Volume2, BookOpen, CheckCircle, MessageSquareQuote, Check, X, Send, Scale, ShieldAlert, Trash2 } from 'lucide-react';
 import { speakScripture, stopSpeaking } from '../utils/audio';
 
 export const TestimonialsView: React.FC = () => {
@@ -35,67 +35,6 @@ export const TestimonialsView: React.FC = () => {
   // Mandatory Biblical Truth Pledge
   const [solemnTruthPledge, setSolemnTruthPledge] = useState<boolean>(false);
   const [pledgeError, setPledgeError] = useState<boolean>(false);
-
-  // Micro speech recognition state for testimonies
-  const [isDictatingStory, setIsDictatingStory] = useState<boolean>(false);
-  const [dictationNotice, setDictationNotice] = useState<string>('');
-  const testimonyRecRef = useRef<any>(null);
-
-  const toggleStoryDictation = () => {
-    const SpeechRecognition =
-      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      alert('La transcription vocale directe n\'est pas supportée par ce navigateur.');
-      return;
-    }
-
-    if (isDictatingStory) {
-      if (testimonyRecRef.current) testimonyRecRef.current.stop();
-      setIsDictatingStory(false);
-      setDictationNotice('Dictée terminée.');
-    } else {
-      try {
-        const recognition = new SpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
-        recognition.lang = 'fr-FR';
-
-        recognition.onstart = () => {
-          setIsDictatingStory(true);
-          setDictationNotice('Micro actif : parlez librement de votre guérison...');
-        };
-
-        recognition.onresult = (event: any) => {
-          let currentTranscript = '';
-          for (let i = event.resultIndex; i < event.results.length; i++) {
-            currentTranscript += event.results[i][0].transcript;
-          }
-          if (currentTranscript.trim()) {
-            setFormStory((prev) => {
-              const sep = prev.trim() ? ' ' : '';
-              return prev + sep + currentTranscript.trim();
-            });
-          }
-        };
-
-        recognition.onerror = (e: any) => {
-          console.error(e);
-          setIsDictatingStory(false);
-          setDictationNotice('Micro arrêté.');
-        };
-
-        recognition.onend = () => {
-          setIsDictatingStory(false);
-        };
-
-        testimonyRecRef.current = recognition;
-        recognition.start();
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  };
 
   // Save testimonies in localStorage under a dedicated clean key
   useEffect(() => {
@@ -481,31 +420,13 @@ export const TestimonialsView: React.FC = () => {
               </div>
 
               <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="block text-slate-300 font-semibold">
-                    Votre récit véridique (Ce que vous avez vécu avec l'application) *
-                  </label>
-                  <button
-                    type="button"
-                    onClick={toggleStoryDictation}
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-xl text-[11px] font-bold transition-all ${
-                      isDictatingStory
-                        ? 'bg-rose-600 text-white animate-pulse'
-                        : 'bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30'
-                    }`}
-                    title="Dicter avec la voix au micro si vous ne savez pas écrire"
-                  >
-                    {isDictatingStory ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
-                    <span>{isDictatingStory ? 'Arrêter micro' : 'Dicter au micro (Voix)'}</span>
-                  </button>
-                </div>
-                {dictationNotice && (
-                  <p className="text-[10px] text-amber-300 italic mb-1">{dictationNotice}</p>
-                )}
+                <label className="block text-slate-300 font-semibold mb-1">
+                  Votre récit véridique (Ce que vous avez vécu avec l'application) *
+                </label>
                 <textarea
                   rows={4}
                   required
-                  placeholder="Décrivez avec sincérité votre expérience : vous pouvez soit taper, soit cliquer sur « Dicter au micro » pour parler avec votre voix..."
+                  placeholder="Décrivez avec sincérité votre expérience : les exercices pratiqués, la prière, le verset et le résultat bienfaisant..."
                   value={formStory}
                   onChange={(e) => setFormStory(e.target.value)}
                   className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 focus:border-amber-400 focus:outline-none resize-none leading-relaxed"
